@@ -57,10 +57,10 @@ const getRandomNoninteger = function (min, max, decimalNumber) {
 
 const createAd = (adNumber) => {
   const result = [];
-  for (let num = 1; num <= adNumber; num += 1) {
+  for (let index = 1; index <= adNumber; index += 1) {
     result.push({
       'author': {
-        'avatar': `img/avatars/user0${num}.png`,
+        'avatar': `img/avatars/user0${index}.png`,
       },
       'offer': {
         'title': getArrayRandElement(TITLE_LIST),
