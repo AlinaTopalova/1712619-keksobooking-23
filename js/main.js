@@ -16,29 +16,31 @@ const DESCRIPTION_LIST = [
   'Удобное расположение',
   'Идеально для отдыха вдвоём',
   'Самый современный номер',
-  'Просторное жильё в самом центре города'];
+  'Просторное жильё в самом центре города',
+];
 const FEATURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 const PHOTOS_LIST = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
+];
 const TYPE_LIST = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 const TITLE_LIST = ['Номер люкс по самой лучшей цене', 'Домик в лесу в аренду', 'Сдам просторные новые аппартаменты', 'Уютная квартира в центре города'];
 
 
-const getArrayRandElement = function (arr) {
+const getArrayRandElement = (arr) => {
   const rand = Math.floor(Math.random() * arr.length);
   return arr[rand];
 };
 
-const getRandomNumber = function (min, max) {
+const getRandomNumber = (min, max) => {
   if (max > min && min >= 0 && max > 0) {
     return Math.floor(min + Math.random() * (max + 1 - min));
   }
   throw new RangeError('Ошибочные значения диапазона: первое значение должно быть меньше второго, а также диапазон может быть только положительный, включая ноль');
 };
 
-const getArrayRandLength = function (arr) {
+const getArrayRandLength = (arr) => {
   const result = [];
   const arrMiddle = Math.floor(arr.length / 2);
   for (let index = getRandomNumber(0, arrMiddle); index < getRandomNumber(arrMiddle + 1, arr.length); index += 1) {
@@ -47,7 +49,7 @@ const getArrayRandLength = function (arr) {
   return result;
 };
 
-const getRandomNoninteger = function (min, max, decimalNumber) {
+const getRandomNoninteger = (min, max, decimalNumber) => {
   if (max > min && min >= 0 && max > 0) {
     return (min + Math.random() * (max - min)).toFixed(decimalNumber);
   }
@@ -55,12 +57,13 @@ const getRandomNoninteger = function (min, max, decimalNumber) {
 };
 
 
-const createAd = (adNumber) => {
+const createAds = (adNumber) => {
   const result = [];
-  for (let index = 1; index <= adNumber; index += 1) {
+
+  for (let i = 1; i <= adNumber; i += 1) {
     result.push({
       'author': {
-        'avatar': `img/avatars/user0${index}.png`,
+        'avatar': `img/avatars/user0${i}.png`,
       },
       'offer': {
         'title': getArrayRandElement(TITLE_LIST),
@@ -84,5 +87,4 @@ const createAd = (adNumber) => {
   return result;
 };
 
-
-createAd(AD_COUNT);
+createAds(AD_COUNT);
