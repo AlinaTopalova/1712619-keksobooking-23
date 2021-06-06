@@ -28,10 +28,9 @@ const TYPE_LIST = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 const TITLE_LIST = ['Номер люкс по самой лучшей цене', 'Домик в лесу в аренду', 'Сдам просторные новые аппартаменты', 'Уютная квартира в центре города'];
 
 
-const getArrayRandElement = (arr) => {
-  const rand = Math.floor(Math.random() * arr.length);
-  return arr[rand];
-};
+const getArrayRandElement = (arr) =>
+  Math.floor(Math.random() * arr.length);
+
 
 const getRandomNumber = (min, max) => {
   if (max > min && min >= 0 && max > 0) {
@@ -40,14 +39,10 @@ const getRandomNumber = (min, max) => {
   throw new RangeError('Ошибочные значения диапазона: первое значение должно быть меньше второго, а также диапазон может быть только положительный, включая ноль');
 };
 
-const getArrayRandLength = (arr) => {
-  const result = [];
-  const arrMiddle = Math.floor(arr.length / 2);
-  for (let index = getRandomNumber(0, arrMiddle); index < getRandomNumber(arrMiddle + 1, arr.length); index += 1) {
-    result.push(arr[index]);
-  }
-  return result;
-};
+
+const getArrayRandLength = (arr) =>
+  arr.slice(0, getRandomNumber(1, arr.length));
+
 
 const getRandomNoninteger = (min, max, decimalNumber) => {
   if (max > min && min >= 0 && max > 0) {
@@ -61,13 +56,17 @@ const createAds = (adNumber) => {
   const result = [];
 
   for (let i = 1; i <= adNumber; i += 1) {
+
+    const locationX = Number(getRandomNoninteger(LAT_MIN, LAT_MAX, LOCATION_DIGITS_AMOUNT));
+    const locationY = Number(getRandomNoninteger(LNG_MIN, LNG_MAX, LOCATION_DIGITS_AMOUNT));
+
     result.push({
       'author': {
         'avatar': `img/avatars/user0${i}.png`,
       },
       'offer': {
         'title': getArrayRandElement(TITLE_LIST),
-        'address': `${getRandomNoninteger(LAT_MIN, LAT_MAX, LOCATION_DIGITS_AMOUNT)}, ${getRandomNoninteger(LNG_MIN, LNG_MAX, LOCATION_DIGITS_AMOUNT)}`,
+        'address': `${locationX}, ${locationY}`,
         'price': getRandomNumber(PRICE_MIN, PRICE_MAX),
         'type': getArrayRandElement(TYPE_LIST),
         'rooms': getRandomNumber(ROOMS_MIN, ROOMS_MAX),
@@ -79,8 +78,8 @@ const createAds = (adNumber) => {
         'photos': getArrayRandLength(PHOTOS_LIST),
       },
       'location': {
-        'lat': Number(getRandomNoninteger(LAT_MIN, LAT_MAX, LOCATION_DIGITS_AMOUNT)),
-        'lng': Number(getRandomNoninteger(LNG_MIN, LNG_MAX, LOCATION_DIGITS_AMOUNT)),
+        'lat': locationX,
+        'lng': locationY,
       },
     });
   }
