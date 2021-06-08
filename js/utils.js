@@ -21,4 +21,5 @@ const getRandomNoninteger = (min, max, decimalNumber) => {
   throw new RangeError('Ошибочные значения диапазона: первое значение должно быть меньше второго, а также диапазон может быть только положительный, включая ноль');
 };
 
+
 export{getArrayRandElement, getRandomNumber, getArrayRandLength, getRandomNoninteger};

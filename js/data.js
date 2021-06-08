@@ -63,6 +63,5 @@ const createAds = (adNumber) => {
   return result;
 };
 
-/*createAds(AD_COUNT);*/
 
 export{createAds};
