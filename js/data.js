@@ -1,4 +1,4 @@
-import{getArrayRandElement, getRandomNumber, getArrayRandLength, getRandomNoninteger} from './utils.js';
+import {getArrayRandElement, getRandomNumber, getArrayRandLength, getRandomNoninteger} from './utils.js';
 
 const LAT_MIN = 35.65000;
 const LAT_MAX = 35.70000;
@@ -64,4 +64,4 @@ const createAds = (adNumber) => {
 };
 
 
-export{createAds};
+export {createAds};
