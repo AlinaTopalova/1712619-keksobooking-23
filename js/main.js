@@ -1,5 +1,2 @@
-import{createAds} from './data.js';
+import './card.js';
 
-const AD_COUNT = 8;
-
-createAds(AD_COUNT);
