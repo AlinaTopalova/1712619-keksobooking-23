@@ -1,4 +1,4 @@
-const MIN_TITLE_LENGTH = 2;
+const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 
 const form = document.querySelector('.ad-form');
