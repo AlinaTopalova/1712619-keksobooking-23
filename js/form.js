@@ -36,25 +36,7 @@ const enableAdForm = () => {
   });
 };
 
-const validateCapacity = () => {
-  const roomsNumber = roomsSelect.value;
-  const guestsNumber = guestsSelect.value;
-  let error = '';
-
-  if (roomsNumber === Rooms.ONE && guestsNumber !== Guests.ONE) {
-    error += 'Только для одного гостя';
-  } else if (roomsNumber === Rooms.TWO && guestsNumber !== Guests.ONE && guestsNumber !== Guests.TWO) {
-    error += 'Только для одного или двух гостей';
-  } else if (roomsNumber === Rooms.THREE && guestsNumber === Guests.ZERO) {
-    error += 'Только для одного, двух или трёх гостей';
-  } else if (roomsNumber === Rooms.HUNDREED && guestsNumber !== Guests.ZERO) {
-    error += 'Не для гостей';
-  }
-  guestsSelect.setCustomValidity(error);
-  guestsSelect.reportValidity();
-};
-
-const validateTitle = () => {
+const titleValidateHandler = () => {
   const valueLength = formAdTitle.value.length;
 
   if (valueLength < MIN_TITLE_LENGTH) {
@@ -67,7 +49,34 @@ const validateTitle = () => {
   formAdTitle.reportValidity();
 };
 
-formAdTitle.addEventListener('input', validateTitle);
-form.addEventListener('change', validateCapacity);
+const validateCapacity = () => {
+  const roomsNumber = roomsSelect.value;
+  const guestsNumber = guestsSelect.value;
+  let error = '';
+
+  if (roomsNumber === Rooms.ONE && guestsNumber !== Guests.ONE) {
+    error = 'Только для одного гостя';
+  } else if (roomsNumber === Rooms.TWO && guestsNumber !== Guests.ONE && guestsNumber !== Guests.TWO) {
+    error = 'Только для одного или двух гостей';
+  } else if (roomsNumber === Rooms.THREE && guestsNumber === Guests.ZERO) {
+    error = 'Для одного, двух или трёх гостей';
+  } else if (roomsNumber === Rooms.HUNDREED && guestsNumber !== Guests.ZERO) {
+    error = 'Не для гостей';
+  }
+  guestsSelect.setCustomValidity(error);
+  guestsSelect.reportValidity();
+};
+
+const formChangeHandler = (evt) => {
+  switch (evt.target) {
+    case roomsSelect:
+    case guestsSelect:
+      validateCapacity();
+      break;
+  }
+};
+
+formAdTitle.addEventListener('input', titleValidateHandler);
+form.addEventListener('change', formChangeHandler);
 
 export {disableAdForm, enableAdForm};
