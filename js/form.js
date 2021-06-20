@@ -66,13 +66,12 @@ const onTypeOfHouseChange = () => {
   price.placeholder = MinPriceForNight[typeOfHouse];
 };
 
-const onRoomChange = () => {
-  const roomAmount = roomsSelect.value;
+const onRoomChange = (evt) => {
   optionCapacityGuests.forEach((option) => {
     option.disabled = true;
   });
 
-  RoomsValue[roomAmount].forEach((seatsAmount) => {
+  RoomsValue[evt.target.value].forEach((seatsAmount) => {
     optionCapacityGuests.forEach((option) => {
       if (Number(option.value) === seatsAmount) {
         option.disabled = false;
