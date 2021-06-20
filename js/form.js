@@ -6,19 +6,25 @@ const formFieldsets = form.querySelectorAll('fieldset');
 const formAdTitle = form.querySelector('#title');
 const roomsSelect = form.querySelector('#room_number');
 const guestsSelect = form.querySelector('#capacity');
+const optionCapacityGuests = guestsSelect.querySelectorAll('option');
+const price = form.querySelector('#price');
+const typeOfHouseSelect = form.querySelector('#type');
+const timeInSelect = form.querySelector('#timein');
+const timeOutSelect = form.querySelector('#timeout');
 
-const Rooms = {
-  ONE: '1',
-  TWO: '2',
-  THREE: '3',
-  HUNDREED: '100',
+const RoomsValue = {
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0],
 };
 
-const Guests = {
-  ONE: '1',
-  TWO: '2',
-  THREE: '3',
-  ZERO: '0',
+const MinPriceForNight = {
+  'bungalow': 0,
+  'flat': 1000,
+  'hotel': 3000,
+  'house': 5000,
+  'palace': 10000,
 };
 
 const disableAdForm = () => {
@@ -36,7 +42,7 @@ const enableAdForm = () => {
   });
 };
 
-const titleValidateHandler = () => {
+const onTitleInput = () => {
   const valueLength = formAdTitle.value.length;
 
   if (valueLength < MIN_TITLE_LENGTH) {
@@ -49,34 +55,38 @@ const titleValidateHandler = () => {
   formAdTitle.reportValidity();
 };
 
-const validateCapacity = () => {
-  const roomsNumber = roomsSelect.value;
-  const guestsNumber = guestsSelect.value;
-  let error = '';
-
-  if (roomsNumber === Rooms.ONE && guestsNumber !== Guests.ONE) {
-    error = 'Только для одного гостя';
-  } else if (roomsNumber === Rooms.TWO && guestsNumber !== Guests.ONE && guestsNumber !== Guests.TWO) {
-    error = 'Только для одного или двух гостей';
-  } else if (roomsNumber === Rooms.THREE && guestsNumber === Guests.ZERO) {
-    error = 'Для одного, двух или трёх гостей';
-  } else if (roomsNumber === Rooms.HUNDREED && guestsNumber !== Guests.ZERO) {
-    error = 'Не для гостей';
-  }
-  guestsSelect.setCustomValidity(error);
-  guestsSelect.reportValidity();
+const onTimeChange = (timeValue) => {
+  timeInSelect.value = timeValue.target.value;
+  timeOutSelect.value = timeValue.target.value;
 };
 
-const formChangeHandler = (evt) => {
-  switch (evt.target) {
-    case roomsSelect:
-    case guestsSelect:
-      validateCapacity();
-      break;
-  }
+const onTypeOfHouseChange = () => {
+  const typeOfHouse = typeOfHouseSelect.value;
+  price.setAttribute('min', MinPriceForNight[typeOfHouse]);
+  price.placeholder = MinPriceForNight[typeOfHouse];
 };
 
-formAdTitle.addEventListener('input', titleValidateHandler);
-form.addEventListener('change', formChangeHandler);
+const onRoomChange = () => {
+  const roomAmount = roomsSelect.value;
+  optionCapacityGuests.forEach((option) => {
+    option.disabled = true;
+  });
+
+  RoomsValue[roomAmount].forEach((seatsAmount) => {
+    optionCapacityGuests.forEach((option) => {
+      if (Number(option.value) === seatsAmount) {
+        option.disabled = false;
+        option.selected = true;
+      }
+    });
+  });
+};
+
+formAdTitle.addEventListener('input', onTitleInput);
+typeOfHouseSelect.addEventListener('change', onTypeOfHouseChange);
+roomsSelect.addEventListener('change', onRoomChange);
+timeInSelect.addEventListener('change', onTimeChange);
+timeOutSelect.addEventListener('change', onTimeChange);
+
 
 export {disableAdForm, enableAdForm};
