@@ -1,8 +1,4 @@
-import {createAds} from './data.js';
-
-const AD_NUM = 1;
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-const map = document.querySelector('.map__canvas');
 const houseTypeDisplay = {
   'palace': 'Дворец',
   'flat': 'Квартира',
@@ -86,13 +82,5 @@ const fillTemplateCard = ({author, offer}) => {
   return card;
 };
 
-const createCards = (ads) => {
-  const similarAdsFragment = document.createDocumentFragment();
+export {fillTemplateCard};
 
-  ads.forEach((card) => {
-    similarAdsFragment.appendChild(fillTemplateCard(card));
-  });
-  return map.appendChild(similarAdsFragment);
-};
-
-createCards(createAds(AD_NUM));

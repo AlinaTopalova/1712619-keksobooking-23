@@ -64,4 +64,4 @@ const createAds = (adNumber) => {
 };
 
 
-export {createAds};
+export {createAds, LOCATION_DIGITS_AMOUNT};
