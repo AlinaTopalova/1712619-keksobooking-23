@@ -1,6 +1,7 @@
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 
+
 const form = document.querySelector('.ad-form');
 const formFieldsets = form.querySelectorAll('fieldset');
 const formAdTitle = form.querySelector('#title');
@@ -11,6 +12,8 @@ const price = form.querySelector('#price');
 const typeOfHouseSelect = form.querySelector('#type');
 const timeInSelect = form.querySelector('#timein');
 const timeOutSelect = form.querySelector('#timeout');
+const address = form.querySelector('#address');
+const resetButton = form.querySelector('.ad-form__reset');
 
 const RoomsValue = {
   1: [1],
@@ -40,6 +43,10 @@ const enableAdForm = () => {
   formFieldsets.forEach((fieldset) => {
     fieldset.disabled = false;
   });
+};
+
+const setAddressInput = (coords) => {
+  address.value = coords;
 };
 
 const onTitleInput = () => {
@@ -88,4 +95,5 @@ timeInSelect.addEventListener('change', onTimeChange);
 timeOutSelect.addEventListener('change', onTimeChange);
 
 
-export {disableAdForm, enableAdForm};
+export {disableAdForm, enableAdForm, setAddressInput, resetButton};
+
