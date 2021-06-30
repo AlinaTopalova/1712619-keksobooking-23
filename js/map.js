@@ -1,17 +1,13 @@
 import {activateApp} from './appState.js';
 import {setAddressInput, resetButton} from './form.js';
-import {createAds, LOCATION_DIGITS_AMOUNT} from './data.js';
 import {fillTemplateCard} from './card.js';
 
-const ADS_COUNT = 8;
+const LOCATION_DIGITS_AMOUNT = 5;
 
 const defaultCoords = {
   LAT: 35.65160,
   LNG: 139.74908,
 };
-
-const pins = createAds(ADS_COUNT);
-
 
 const map = L.map('map-canvas')
   .on('load', () => activateApp())
@@ -97,7 +93,7 @@ const createAdMarker = (ad) => {
     );
 };
 
-pins.forEach((pin) => createAdMarker(pin));
-
 getMainPinCoords();
+
+export {createAdMarker};
 
