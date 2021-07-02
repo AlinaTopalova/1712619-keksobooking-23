@@ -18,4 +18,5 @@ const enableFilters = () => {
   filterFeatures.disabled = false;
 };
 
-export {disableFilters, enableFilters};
+
+export {disableFilters, enableFilters, filters};

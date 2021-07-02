@@ -10,6 +10,7 @@ const closeSuccessPopup = () => {
   if (successPopup !== null) {
     successPopup.remove();
     successPopup = null;
+    successPopup.removeEventListener('click', closeSuccessPopup);
   }
 };
 
@@ -17,6 +18,7 @@ const closeErrorPopup = () => {
   if (errorPopup !== null) {
     errorPopup.remove();
     errorPopup = null;
+    errorPopup.removeEventListener('click', closeErrorPopup);
   }
 };
 
@@ -24,6 +26,7 @@ const onSuccessPopupKeydown = (evt) => {
   if (isEscEvent(evt) || isEnterEvent(evt)) {
     evt.preventDefault();
     closeSuccessPopup();
+    document.removeEventListener('keydown', onSuccessPopupKeydown);
   }
 };
 
@@ -31,6 +34,7 @@ const onErrorPopupKeydown = (evt) => {
   if (isEscEvent(evt) || isEnterEvent(evt)) {
     evt.preventDefault();
     closeErrorPopup();
+    document.removeEventListener('keydown', onErrorPopupKeydown);
   }
 };
 

@@ -1,7 +1,8 @@
-import {showSuccessPopup, showErrorPopup} from './popup.js';
+import { DefaultCoords } from './constants.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
+const COORD_DIGITS_AMOUNT = 5;
 
 const RoomsValue = {
   1: [1],
@@ -46,8 +47,13 @@ const enableAdForm = () => {
   });
 };
 
-const setAddressInput = (coords) => {
-  address.value = coords;
+const setAddressInput = ({lat, lng}) => {
+  address.value = `${lat.toFixed(COORD_DIGITS_AMOUNT)}, ${lng.toFixed(COORD_DIGITS_AMOUNT)}`;
+};
+
+const resetAdForm = () => {
+  form.reset();
+  setAddressInput({lat: DefaultCoords.LAT, lng: DefaultCoords.LNG});
 };
 
 const onTitleInput = () => {
@@ -90,27 +96,18 @@ const onRoomChange = (evt) => {
   });
 };
 
-const setFormSubmit = (send) => {
-  form.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    send(evt.target)
-      .then(() => showSuccessPopup())
-      .catch(() => showErrorPopup());
-  });
-};
-
 formAdTitle.addEventListener('input', onTitleInput);
 typeOfHouseSelect.addEventListener('change', onTypeOfHouseChange);
 roomsSelect.addEventListener('change', onRoomChange);
 timeInSelect.addEventListener('change', onTimeChange);
 timeOutSelect.addEventListener('change', onTimeChange);
 
-
 export {
   disableAdForm,
   enableAdForm,
   setAddressInput,
-  setFormSubmit,
+  resetAdForm,
+  form,
   resetButton
 };
 
