@@ -1,3 +1,5 @@
+const ALERT_SHOW_TIME = 5000;
+
 const getArrayRandElement = (arr) => {
   const rand = Math.floor(Math.random() * arr.length);
   return arr[rand];
@@ -23,5 +25,31 @@ const getRandomNoninteger = (min, max, decimalNumber) => {
   throw new RangeError('Ошибочные значения диапазона: первое значение должно быть меньше второго, а также диапазон может быть только положительный, включая ноль');
 };
 
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-export{getArrayRandElement, getRandomNumber, getArrayRandLength, getRandomNoninteger};
+const isEnterEvent = (evt) => evt.key === 'Enter';
+
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '20px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'black';
+  alertContainer.style.color = 'white';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+};
+
+
+export{getArrayRandElement, getRandomNumber, getArrayRandLength, getRandomNoninteger, isEscEvent, isEnterEvent, showAlert};
