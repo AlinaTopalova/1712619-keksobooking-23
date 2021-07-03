@@ -4,11 +4,11 @@ const filters = document.querySelector('.map__filters');
 const filterSelects = filters.querySelectorAll('select');
 const filterFeatures = filters.querySelector('.map__features');
 const housingType = filters.querySelector('#housing-type');
-const housingPrice = filters.querySelector('#housing-price');
-const housingRooms = filters.querySelector('#housing-rooms');
-const housingGuests = filters.querySelector('#housing-guests');
-const housingFeatures = filters.querySelector('#housing-features');
-const checkboxFeatures = housingFeatures.querySelector('.map__feature');
+//const housingPrice = filters.querySelector('#housing-price');
+//const housingRooms = filters.querySelector('#housing-rooms');
+//const housingGuests = filters.querySelector('#housing-guests');
+//const housingFeatures = filters.querySelector('#housing-features');
+//const checkboxFeatures = housingFeatures.querySelector('.map__feature');
 
 
 const disableFilters = () => {
