@@ -19,7 +19,7 @@ const fillTemplateCard = ({author, offer}) => {
   const cardTitle = card.querySelector('.popup__title');
   const cardAddress = card.querySelector('.popup__text--address');
   const cardPrice = card.querySelector('.popup__text--price');
-  const cardType = card.querySelector('.popup__type');
+  const cardHousingType = card.querySelector('.popup__type');
   const cardCapacity = card.querySelector('.popup__text--capacity');
   const cardCheckTime = card.querySelector('.popup__text--time');
   const cardFeatures = card.querySelector('.popup__features');
@@ -30,7 +30,7 @@ const fillTemplateCard = ({author, offer}) => {
   fillElementAdsData(offer.title, cardTitle, offer.title);
   fillElementAdsData(offer.address, cardAddress, offer.address);
   fillElementAdsData(offer.price, cardPrice, `${offer.price} ₽/ночь`);
-  fillElementAdsData(offer.type, cardType, houseTypeDisplay[offer.type]);
+  fillElementAdsData(offer.type, cardHousingType, houseTypeDisplay[offer.type]);
   fillElementAdsData(offer.description, cardDescription, offer.description);
 
   if(!author.avatar) {

@@ -52,4 +52,11 @@ const showAlert = (message) => {
 };
 
 
-export{getArrayRandElement, getRandomNumber, getArrayRandLength, getRandomNoninteger, isEscEvent, isEnterEvent, showAlert};
+export{
+  getArrayRandElement,
+  getRandomNumber,
+  getArrayRandLength,
+  getRandomNoninteger,
+  isEscEvent,
+  isEnterEvent,
+  showAlert};

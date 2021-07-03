@@ -8,7 +8,7 @@ import {form, disableAdForm, enableAdForm, resetAdForm, resetButton, setAddressI
 import {getData, sendData} from './api.js';
 import {createAdMarker, initMap, resetMap} from './map.js';
 import {showAlert} from './utils.js';
-import {disableFilters, enableFilters, filters} from './filters.js';
+import {disableFilters, enableFilters, filterHousingType, filters} from './filters.js';
 import { DefaultCoords } from './constants.js';
 import {showSuccessPopup, showErrorPopup} from './popup.js';
 
@@ -16,6 +16,11 @@ const ADS_COUNT = 10;
 
 const renderAds = (ads) => {
   ads.slice(0, ADS_COUNT).forEach((ad) => createAdMarker(ad));
+};
+
+const applyFilter = (ads) => {
+  const filteredAds = ads.filter(filterHousingType);
+  return renderAds(filteredAds);
 };
 
 const showMessageError = (error) => {
