@@ -6,32 +6,29 @@ import './popup.js';
 
 import {form, disableAdForm, enableAdForm, resetAdForm, resetButton, setAddressInput} from './form.js';
 import {getData, sendData} from './api.js';
-import {createAdMarker, initMap, resetMap} from './map.js';
-import {showAlert} from './utils.js';
-import {disableFilters, enableFilters, /*filterHousingType,*/ filters} from './filters.js';
+import {renderAdMarkers, removeAdMarkers, initMap, resetMap} from './map.js';
+import {showAlert, debounce} from './utils.js';
+import {disableFilters, enableFilters, getFilteredAds, filterForm} from './filters.js';
 import { DefaultCoords } from './constants.js';
 import {showSuccessPopup, showErrorPopup} from './popup.js';
 
-const ADS_COUNT = 10;
-
-const renderAds = (ads) => {
-  ads.slice(0, ADS_COUNT).forEach((ad) => createAdMarker(ad));
-};
-
-// const applyFilter = (ads) => {
-//   const filteredAds = ads.filter(filterHousingType);
-//   return renderAds(filteredAds);
-// };
-
+let adsData;
 
 const showMessageError = (error) => {
   showAlert(`Не удалось загрузить объявления ${error}`);
 };
 
+const onFilterChange = debounce((ads) => {
+  const newAds = getFilteredAds(ads);
+  removeAdMarkers();
+  renderAdMarkers(newAds);
+});
+
 const resetApp = () => {
   resetMap();
   resetAdForm();
-  filters.reset();
+  filterForm.reset();
+  renderAdMarkers(adsData);
 };
 
 const deactivateApp = () => {
@@ -63,7 +60,13 @@ const initApp = () => {
   setAddressInput({lat: DefaultCoords.LAT, lng: DefaultCoords.LNG});
   setFormSubmit(sendData);
   getData()
-    .then(renderAds)
+    .then((ads) => {
+      adsData = ads;
+      renderAdMarkers(ads);
+      filterForm.addEventListener('change', () => {
+        onFilterChange(ads);
+      });
+    })
     .catch(showMessageError);
 
   resetButton.addEventListener('click', (evt) => {

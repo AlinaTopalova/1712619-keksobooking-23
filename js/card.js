@@ -1,5 +1,5 @@
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-const houseTypeDisplay = {
+const HouseTypeDisplay = {
   'palace': 'Дворец',
   'flat': 'Квартира',
   'house': 'Дом',
@@ -30,7 +30,7 @@ const fillTemplateCard = ({author, offer}) => {
   fillElementAdsData(offer.title, cardTitle, offer.title);
   fillElementAdsData(offer.address, cardAddress, offer.address);
   fillElementAdsData(offer.price, cardPrice, `${offer.price} ₽/ночь`);
-  fillElementAdsData(offer.type, cardHousingType, houseTypeDisplay[offer.type]);
+  fillElementAdsData(offer.type, cardHousingType, HouseTypeDisplay[offer.type]);
   fillElementAdsData(offer.description, cardDescription, offer.description);
 
   if(!author.avatar) {
