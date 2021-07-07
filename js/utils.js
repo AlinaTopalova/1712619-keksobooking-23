@@ -5,7 +5,6 @@ const getArrayRandElement = (arr) => {
   return arr[rand];
 };
 
-
 const getRandomNumber = (min, max) => {
   if (max > min && min >= 0 && max > 0) {
     return Math.floor(min + Math.random() * (max + 1 - min));
@@ -13,10 +12,8 @@ const getRandomNumber = (min, max) => {
   throw new RangeError('Ошибочные значения диапазона: первое значение должно быть меньше второго, а также диапазон может быть только положительный, включая ноль');
 };
 
-
 const getArrayRandLength = (arr) =>
   arr.slice(0, getRandomNumber(1, arr.length));
-
 
 const getRandomNoninteger = (min, max, decimalNumber) => {
   if (max > min && min >= 0 && max > 0) {
@@ -51,5 +48,25 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
+// Функция взята из интернета и доработана
+// Источник - https://www.freecodecamp.org/news/javascript-debounce-example
 
-export{getArrayRandElement, getRandomNumber, getArrayRandLength, getRandomNoninteger, isEscEvent, isEnterEvent, showAlert};
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export{
+  getArrayRandElement,
+  getRandomNumber,
+  getArrayRandLength,
+  getRandomNoninteger,
+  isEscEvent,
+  isEnterEvent,
+  showAlert,
+  debounce
+};

@@ -1,6 +1,8 @@
 import {fillTemplateCard} from './card.js';
 import {DefaultCoords} from './constants.js';
 
+const AD_COUNT = 10;
+
 let map;
 let adMarkersGroup;
 
@@ -18,6 +20,29 @@ const mainPin = L.marker(
     }),
   },
 );
+
+const createAdMarker = (ad) => {
+  const { lat, lng } = ad.location;
+  const adMarker = L.marker(
+    { lat, lng },
+    {
+      icon: L.icon({
+        iconUrl: 'img/pin.svg',
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+      }),
+    },
+  );
+
+  adMarker
+    .addTo(adMarkersGroup)
+    .bindPopup(
+      fillTemplateCard(ad),
+      {
+        keepInView: true,
+      },
+    );
+};
 
 const initMap = ({ onMapLoad, onMainPinMoveEnd }) => {
   map = L.map('map-canvas')
@@ -43,6 +68,10 @@ const initMap = ({ onMapLoad, onMainPinMoveEnd }) => {
   });
 };
 
+const renderAdMarkers = (ads) => {
+  ads.slice(0, AD_COUNT).forEach((ad) => createAdMarker(ad));
+};
+
 const resetMap = () => {
   mainPin.setLatLng({
     lat: DefaultCoords.LAT,
@@ -54,28 +83,9 @@ const resetMap = () => {
   }, 11);
 };
 
-const createAdMarker = (ad) => {
-  const { lat, lng } = ad.location;
-  const adMarker = L.marker(
-    { lat, lng },
-    {
-      icon: L.icon({
-        iconUrl: 'img/pin.svg',
-        iconSize: [40, 40],
-        iconAnchor: [20, 40],
-      }),
-    },
-  );
-
-  adMarker
-    .addTo(adMarkersGroup)
-    .bindPopup(
-      fillTemplateCard(ad),
-      {
-        keepInView: true,
-      },
-    );
+const removeAdMarkers = () => {
+  adMarkersGroup.clearLayers();
 };
 
-export {createAdMarker, initMap, resetMap};
+export {initMap, resetMap, renderAdMarkers, removeAdMarkers};
 
