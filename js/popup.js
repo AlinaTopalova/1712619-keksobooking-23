@@ -9,16 +9,16 @@ let errorPopup = null;
 const closeSuccessPopup = () => {
   if (successPopup !== null) {
     successPopup.remove();
-    successPopup = null;
     successPopup.removeEventListener('click', closeSuccessPopup);
+    successPopup = null;
   }
 };
 
 const closeErrorPopup = () => {
   if (errorPopup !== null) {
     errorPopup.remove();
-    errorPopup = null;
     errorPopup.removeEventListener('click', closeErrorPopup);
+    errorPopup = null;
   }
 };
 
