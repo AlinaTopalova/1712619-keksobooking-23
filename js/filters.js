@@ -18,7 +18,6 @@ const housingGuests = filterForm.querySelector('#housing-guests');
 const housingFeatures = filterForm.querySelector('#housing-features');
 const checkboxFeatures = housingFeatures.querySelectorAll('.map__checkbox');
 
-
 const disableFilters = () => {
   filterForm.classList.add('map__filters--disabled');
   filterSelects.forEach((select) => {
@@ -75,13 +74,19 @@ const filterHousingFeatures = (ad) => Array.from(checkboxFeatures)
   });
 
 const getFilteredAds = (ads) => {
-  const filteredAds = ads.filter((ad) => (
-    filterHousingType(ad) &&
-    filterHousingPrice(ad) &&
-    filterHousingRooms(ad) &&
-    filterHousingGuests(ad) &&
-    filterHousingFeatures(ad)
-  ));
+  const filteredAds = [];
+  for (let i = 0; i < ads.length; i++) {
+    const ad = ads[i];
+    if (
+      filterHousingType(ad) &&
+      filterHousingPrice(ad) &&
+      filterHousingRooms(ad) &&
+      filterHousingGuests(ad) &&
+      filterHousingFeatures(ad)
+    ) {
+      filteredAds.push(ad);
+    }
+  }
   return filteredAds;
 };
 

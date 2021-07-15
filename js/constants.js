@@ -3,4 +3,9 @@ const DefaultCoords = {
   LNG: 139.74908,
 };
 
-export {DefaultCoords};
+const PopupType = {
+  ERROR: 'ERROR',
+  SUCCESS: 'SUCCESS',
+};
+
+export {DefaultCoords, PopupType};

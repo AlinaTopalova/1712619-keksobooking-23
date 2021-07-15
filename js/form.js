@@ -1,8 +1,10 @@
-import { DefaultCoords } from './constants.js';
+import {DefaultCoords} from './constants.js';
+import {onChooserChange} from './photo.js';
 
-const MIN_TITLE_LENGTH = 30;
-const MAX_TITLE_LENGTH = 100;
 const COORD_DIGITS_AMOUNT = 5;
+const MAX_TITLE_LENGTH = 100;
+const MIN_TITLE_LENGTH = 30;
+const AVATAR_DEFAULT = 'img/muffin-grey.svg';
 
 const RoomsValue = {
   1: [1],
@@ -31,21 +33,10 @@ const timeInSelect = form.querySelector('#timein');
 const timeOutSelect = form.querySelector('#timeout');
 const address = form.querySelector('#address');
 const resetButton = form.querySelector('.ad-form__reset');
-
-const disableAdForm = () => {
-  form.classList.add('ad-form--disabled');
-
-  formFieldsets.forEach((fieldset) => {
-    fieldset.disabled = true;
-  });
-};
-
-const enableAdForm = () => {
-  form.classList.remove('ad-form--disabled');
-  formFieldsets.forEach((fieldset) => {
-    fieldset.disabled = false;
-  });
-};
+const avatarChooser = form.querySelector('.ad-form__field input[type=file]');
+const avatarPreview = form.querySelector('.ad-form-header__preview img');
+const housePhotoChooser = form.querySelector('.ad-form__upload input[type=file]');
+const housePreviewContainer = form.querySelector('.ad-form__photo');
 
 const setAddressInput = ({lat, lng}) => {
   address.value = `${lat.toFixed(COORD_DIGITS_AMOUNT)}, ${lng.toFixed(COORD_DIGITS_AMOUNT)}`;
@@ -54,6 +45,9 @@ const setAddressInput = ({lat, lng}) => {
 const resetAdForm = () => {
   form.reset();
   setAddressInput({lat: DefaultCoords.LAT, lng: DefaultCoords.LNG});
+  price.placeholder = MinPriceForNight[typeOfHouseSelect.value];
+  avatarPreview.src = AVATAR_DEFAULT;
+  housePreviewContainer.innerHTML = '';
 };
 
 const onTitleInput = () => {
@@ -96,11 +90,45 @@ const onRoomChange = (evt) => {
   });
 };
 
-formAdTitle.addEventListener('input', onTitleInput);
-typeOfHouseSelect.addEventListener('change', onTypeOfHouseChange);
-roomsSelect.addEventListener('change', onRoomChange);
-timeInSelect.addEventListener('change', onTimeChange);
-timeOutSelect.addEventListener('change', onTimeChange);
+const onAvatarChooserChange = (evt) => {
+  onChooserChange(evt.target, avatarPreview);
+};
+
+const onHousePhotoChooserChange = (evt) => {
+  const housePhotoPreview = document.createElement('img');
+  housePhotoPreview.style.cssText = 'width: 100%; height: 100%; object-fit: cover';
+  housePreviewContainer.appendChild(housePhotoPreview);
+  onChooserChange(evt.target, housePhotoPreview);
+};
+
+const disableAdForm = () => {
+  form.classList.add('ad-form--disabled');
+
+  formFieldsets.forEach((fieldset) => {
+    fieldset.disabled = true;
+  });
+  formAdTitle.removeEventListener('input', onTitleInput);
+  typeOfHouseSelect.removeEventListener('change', onTypeOfHouseChange);
+  roomsSelect.removeEventListener('change', onRoomChange);
+  timeInSelect.removeEventListener('change', onTimeChange);
+  timeOutSelect.removeEventListener('change', onTimeChange);
+  avatarChooser.removeEventListener('change', onAvatarChooserChange);
+  housePhotoChooser.removeEventListener('change', onHousePhotoChooserChange);
+};
+
+const enableAdForm = () => {
+  form.classList.remove('ad-form--disabled');
+  formFieldsets.forEach((fieldset) => {
+    fieldset.disabled = false;
+  });
+  formAdTitle.addEventListener('input', onTitleInput);
+  typeOfHouseSelect.addEventListener('change', onTypeOfHouseChange);
+  roomsSelect.addEventListener('change', onRoomChange);
+  timeInSelect.addEventListener('change', onTimeChange);
+  timeOutSelect.addEventListener('change', onTimeChange);
+  avatarChooser.addEventListener('change', onAvatarChooserChange);
+  housePhotoChooser.addEventListener('change', onHousePhotoChooserChange);
+};
 
 export {
   disableAdForm,

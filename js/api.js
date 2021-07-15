@@ -1,5 +1,7 @@
+const API_ADDRESS = 'https://23.javascript.pages.academy/keksobooking';
+
 const getData = () => (
-  fetch('https://23.javascript.pages.academy/keksobooking/data')
+  fetch(`${API_ADDRESS}/data`)
     .then((response) => {
       if (response.ok) {
         return response;
@@ -10,7 +12,7 @@ const getData = () => (
 );
 
 const sendData = (form) => (
-  fetch('https://23.javascript.pages.academy/keksobooking',
+  fetch(`${API_ADDRESS}`,
     {
       method: 'POST',
       body: new FormData(form),

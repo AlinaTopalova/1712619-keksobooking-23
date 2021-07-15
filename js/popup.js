@@ -1,56 +1,37 @@
 import {isEscEvent, isEnterEvent} from './utils.js';
+import {PopupType} from './constants.js';
 
-const successPopupTemplate = document.querySelector('#success').content.querySelector('.success');
-const errorPopupTemplate = document.querySelector('#error').content.querySelector('.error');
-
-let successPopup = null;
-let errorPopup = null;
-
-const closeSuccessPopup = () => {
-  if (successPopup !== null) {
-    successPopup.remove();
-    successPopup.removeEventListener('click', closeSuccessPopup);
-    successPopup = null;
-  }
+const popupTemplate = {
+  [PopupType.ERROR]: document.querySelector('#error').content.querySelector('.error'),
+  [PopupType.SUCCESS]: document.querySelector('#success').content.querySelector('.success'),
 };
 
-const closeErrorPopup = () => {
-  if (errorPopup !== null) {
-    errorPopup.remove();
-    errorPopup.removeEventListener('click', closeErrorPopup);
-    errorPopup = null;
-  }
-};
+let activePopup = null;
 
-const onSuccessPopupKeydown = (evt) => {
+function removePopup() {
+  if (activePopup !== null) {
+    activePopup.remove();
+    document.removeEventListener('keydown', onPopupKeyDown);
+    activePopup = null;
+  }
+}
+
+function onPopupKeyDown (evt) {
   if (isEscEvent(evt) || isEnterEvent(evt)) {
     evt.preventDefault();
-    closeSuccessPopup();
-    document.removeEventListener('keydown', onSuccessPopupKeydown);
+    removePopup();
   }
+}
+
+function onPopupClick () {
+  removePopup();
+}
+
+const showPopup = (popupType) => {
+  activePopup = popupTemplate[popupType].cloneNode(true);
+  document.body.insertAdjacentElement('afterbegin', activePopup);
+  activePopup.addEventListener('click', onPopupClick);
+  document.addEventListener('keydown', onPopupKeyDown);
 };
 
-const onErrorPopupKeydown = (evt) => {
-  if (isEscEvent(evt) || isEnterEvent(evt)) {
-    evt.preventDefault();
-    closeErrorPopup();
-    document.removeEventListener('keydown', onErrorPopupKeydown);
-  }
-};
-
-const showSuccessPopup = () => {
-  successPopup = successPopupTemplate.cloneNode(true);
-  document.body.insertAdjacentElement('afterbegin', successPopup);
-  successPopup.addEventListener('click', closeSuccessPopup);
-  document.addEventListener('keydown', onSuccessPopupKeydown);
-};
-
-const showErrorPopup = () => {
-  errorPopup = errorPopupTemplate.cloneNode(true);
-  document.body.insertAdjacentElement('afterbegin', errorPopup);
-  errorPopup.addEventListener('click', closeErrorPopup);
-  document.addEventListener('keydown', onErrorPopupKeydown);
-};
-
-export {showSuccessPopup, showErrorPopup};
-
+export {showPopup};

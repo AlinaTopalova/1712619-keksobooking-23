@@ -2,6 +2,13 @@ import {fillTemplateCard} from './card.js';
 import {DefaultCoords} from './constants.js';
 
 const AD_COUNT = 10;
+const MAP_ZOOM = 11;
+const MAINPIN_WIDTH = 52;
+const MAINPIN_HEIGHT = 52;
+const MAINPIN_MIDDLE_WIDTH = 26;
+const PIN_WIDTH = 40;
+const PIN_HEIGHT = 40;
+const PIN_MIDDLE_WIDTH = 20;
 
 let map;
 let adMarkersGroup;
@@ -15,8 +22,8 @@ const mainPin = L.marker(
     draggable: true,
     icon: L.icon({
       iconUrl: 'img/main-pin.svg',
-      iconSize: [52, 52],
-      iconAnchor: [26, 52],
+      iconSize: [MAINPIN_WIDTH, MAINPIN_HEIGHT],
+      iconAnchor: [MAINPIN_MIDDLE_WIDTH, MAINPIN_HEIGHT],
     }),
   },
 );
@@ -28,8 +35,8 @@ const createAdMarker = (ad) => {
     {
       icon: L.icon({
         iconUrl: 'img/pin.svg',
-        iconSize: [40, 40],
-        iconAnchor: [20, 40],
+        iconSize: [PIN_WIDTH, PIN_HEIGHT],
+        iconAnchor: [PIN_MIDDLE_WIDTH, PIN_HEIGHT],
       }),
     },
   );
@@ -44,13 +51,13 @@ const createAdMarker = (ad) => {
     );
 };
 
-const initMap = ({ onMapLoad, onMainPinMoveEnd }) => {
+const initMap = ({ onMapLoad, onMainPinDrag }) => {
   map = L.map('map-canvas')
     .on('load', onMapLoad)
     .setView({
       lat: DefaultCoords.LAT,
       lng: DefaultCoords.LNG,
-    }, 11);
+    }, MAP_ZOOM);
 
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -63,8 +70,8 @@ const initMap = ({ onMapLoad, onMainPinMoveEnd }) => {
 
   adMarkersGroup = L.layerGroup().addTo(map);
 
-  mainPin.on('moveend', (evt) => {
-    onMainPinMoveEnd(evt.target.getLatLng());
+  mainPin.on('drag', (evt) => {
+    onMainPinDrag(evt.target.getLatLng());
   });
 };
 
@@ -80,7 +87,7 @@ const resetMap = () => {
   map.setView({
     lat: DefaultCoords.LAT,
     lng: DefaultCoords.LNG,
-  }, 11);
+  }, MAP_ZOOM);
 };
 
 const removeAdMarkers = () => {
